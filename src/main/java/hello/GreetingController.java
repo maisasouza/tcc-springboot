@@ -3,6 +3,7 @@ package hello;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class GreetingController {
+	
+	@Autowired
+	private PDFReaderService pdfService;
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
@@ -29,13 +33,14 @@ public class GreetingController {
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> criarCampanha(@RequestPart("quantidade") ArquivoDTO quantidade,
+    public ResponseEntity<Object> criarCampanha(@RequestPart("quantidade") ArquivoDTO quantidade,
             @RequestPart(value = "file", required = false) MultipartFile arquivoPdf) throws IOException, Exception {
+    	
+    	pdfService.extractPDFWords(arquivoPdf.getInputStream());
     	
     	System.out.println("Quantidade recebida: " + quantidade.getQuantidade());
     	
-    	
-        return ResponseEntity.ok().body("deu certo !"); 
+        return ResponseEntity.ok().body(null); 
     }
     
     
