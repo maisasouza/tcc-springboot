@@ -1,12 +1,12 @@
-package hello;
+package tcc;
 
 public class HitBusca {
 
 	private String mensagemId;
-	private String score;
+	private Float score;
 	private String id;
 	
-	public HitBusca(String id, String mensagemId, String score) {
+	public HitBusca(String id, String mensagemId, Float score) {
 		this.id = id;
 		this.mensagemId = mensagemId;
 		this.score = score;
@@ -24,10 +24,10 @@ public class HitBusca {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getScore() {
+	public Float getScore() {
 		return score;
 	}
-	public void setScore(String score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
 	

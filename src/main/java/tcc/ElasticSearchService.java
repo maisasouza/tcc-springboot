@@ -1,4 +1,4 @@
-package hello;
+package tcc;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -45,38 +45,37 @@ public class ElasticSearchService {
 		        .setSource(json, XContentType.JSON)
 		        .get();
 		
-		System.out.println("ID gerado: " + response.getId());
-		System.out.println("Indice gerado: " + response.getIndex());
-//		System.out.println("Tipo gerado: " + response.getType());
-		System.out.println("Status: " + response.status().toString());
+//		System.out.println("ID gerado: " + response.getId());
+//		System.out.println("Indice gerado: " + response.getIndex());
+//		System.out.println("Status: " + response.status().toString());
 		
 	}
 	
 	public void closeClient() {
 		this.client.close();
+		this.client = null;
 	}
 	
-	public Long pesquisaTermo(String termoPesquisa) {
+	public RespostaBusca pesquisaTermo(String termoPesquisa) {
 		
+		RespostaBusca retorno = new RespostaBusca();
 		this.createClient();
 		
 		SearchResponse response = client.prepareSearch("documentos")
 		        .setTypes("_doc")
-		        .setQuery(QueryBuilders.queryStringQuery(termoPesquisa))                 // Query
+		        .setQuery(QueryBuilders.queryStringQuery(termoPesquisa))                
 		        .setSize(10)
 		        .get();
 		
 		
-		System.out.println(response.getHits().getTotalHits() + " documentos encontrados.");
-		Long retorno = response.getHits().getTotalHits();
-		
-		List<HitBusca> retorno = new ArrayList<HitBusca>();
+		retorno.setTotalEncontrados(response.getHits().getTotalHits());
 		
 		response.getHits().forEach((element) -> {
-//			retorno.add(new HitBusca(element.getId(), element.getFields().get("idMensagem").getValue(), (element.getScore()) ))
+			retorno.getResultado().add(new HitBusca(element.getId(), (String) element.getSourceAsMap().get("idMensagem"), element.getScore()));
 		});
 		
 		this.closeClient();
+		
 		return retorno;
 	}
 	

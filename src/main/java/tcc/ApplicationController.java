@@ -1,6 +1,7 @@
-package hello;
+package tcc;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-public class GreetingController {
+public class ApplicationController {
 	
 	@Autowired
 	private PDFReaderService pdfService;
@@ -24,15 +25,6 @@ public class GreetingController {
 	@Autowired
 	private ElasticSearchService elasticService;
 	
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
-    @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Greeting(counter.incrementAndGet(),
-                            String.format(template, name));
-    }
-    
     
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -52,13 +44,13 @@ public class GreetingController {
     
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping("/pesquisa/{termo}")
-    public Greeting pesquisar(@PathVariable("termo") String termo ) {
+    public ResponseEntity<RespostaBusca> pesquisar(@PathVariable("termo") String termo ) {
     	
     	System.out.println("Termo a ser pesquisado: " + termo);
     	
-    	Long hitsEncontrados = elasticService.pesquisaTermo(termo);
+    	RespostaBusca resultado = elasticService.pesquisaTermo(termo);
     	
-        return new Greeting(hitsEncontrados, "documentos encontrados");
+        return ResponseEntity.ok().body(resultado);
     }
     
     
