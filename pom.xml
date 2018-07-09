@@ -30,27 +30,49 @@
 			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.elasticsearch.client</groupId>
-			<artifactId>transport</artifactId>
-			<version>6.3.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.elasticsearch</groupId>
 			<artifactId>elasticsearch</artifactId>
-			<version>6.3.0</version>
+			<version>${elastic.version}</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.elasticsearch.plugin/transport-netty4-client -->
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>transport</artifactId>
+			<version>${elastic.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>elasticsearch-rest-high-level-client</artifactId>
+			<version>${elastic.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch.plugin</groupId>
 			<artifactId>transport-netty4-client</artifactId>
-			<version>6.3.0</version>
+			<version>${elastic.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.9</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.11.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
 		</dependency>
 
 
@@ -59,6 +81,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
@@ -68,6 +92,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<elastic.version>6.3.1</elastic.version>
 	</properties>
 
 
