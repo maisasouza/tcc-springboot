@@ -1,8 +1,6 @@
 package tcc;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +30,7 @@ public class ApplicationController {
             @RequestPart(value = "file", required = false) MultipartFile arquivoPdf) throws IOException, Exception {
     	
     	System.out.println("Quantidade recebida: " + quantidade.getQuantidade() + ", numero de vezes que o arquivo será indexado na base.");
+    	System.out.println("Tamanho do arquivo recebido: " + arquivoPdf.getSize()/1000000);
     	
     	pdfService.extractPDFWords(arquivoPdf.getInputStream(), 
     			arquivoPdf.getOriginalFilename(), 

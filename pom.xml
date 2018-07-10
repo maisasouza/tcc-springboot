@@ -18,6 +18,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>pdfbox</artifactId>
@@ -93,6 +94,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<elastic.version>6.3.1</elastic.version>
+		<start-class>tcc.Application</start-class>
 	</properties>
 
 
@@ -103,15 +105,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>resources</directory>
-				<targetPath>${project.build.outputDirectory}</targetPath>
-				<includes>
-					<include>application.properties</include>
-				</includes>
-			</resource>
-		</resources>
 	</build>
 
 	<repositories>
