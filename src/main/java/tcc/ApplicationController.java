@@ -1,6 +1,7 @@
 package tcc;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ApplicationController {
             @RequestPart(value = "file", required = false) MultipartFile arquivoPdf) throws IOException, Exception {
     	
     	System.out.println("Quantidade recebida: " + quantidade.getQuantidade() + ", numero de vezes que o arquivo será indexado na base.");
-    	System.out.println("Tamanho do arquivo recebido: " + arquivoPdf.getSize()/1000000);
+    	System.out.println("Tamanho do arquivo recebido: " + arquivoPdf.getSize()/1000000 + " MB");
     	
     	pdfService.extractPDFWords(arquivoPdf.getInputStream(), 
     			arquivoPdf.getOriginalFilename(), 
@@ -45,13 +46,15 @@ public class ApplicationController {
     public ResponseEntity<RespostaBusca> pesquisar(@PathVariable("termo") String termo ) {
     	
     	System.out.println("Termo a ser pesquisado: " + termo);
-    	
-    	RespostaBusca resultado = elasticService.pesquisaTermo(termo);
+        
+        Date tempoBuscaInicial = new Date(); 
+        RespostaBusca resultado = elasticService.pesquisaTermo(termo);
+        Date tempoBuscaFinal = new Date();
+        Long diferencaBusca = tempoBuscaFinal.getTime() - tempoBuscaInicial.getTime();
+        System.out.println(" Busca em milisegundos: " + diferencaBusca.toString());
     	
         return ResponseEntity.ok().body(resultado);
     }
-    
-    
-    
+
     
 }

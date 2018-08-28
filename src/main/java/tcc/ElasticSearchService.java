@@ -45,6 +45,9 @@ public class ElasticSearchService {
 		json.put("texto", texto);
 		json.put("idMensagem", mensagemId);
 
+		if (client == null) {
+			this.createClient();
+		}
 
 		IndexResponse response = client.prepareIndex("documentos", "_doc")
 				.setSource(json, XContentType.JSON)
@@ -69,12 +72,13 @@ public class ElasticSearchService {
 		SearchResponse response = client.prepareSearch("documentos")
 				.setTypes("_doc")
 				.setQuery(QueryBuilders.queryStringQuery(termoPesquisa))                
-				.setSize(10)
+				.setSize(10) 			//Retirar essa linha para rodar scripts
 				.get();
 
 
 		retorno.setTotalEncontrados(response.getHits().getTotalHits());
 
+		//Retirar esse comando para rodar scripts
 		response.getHits().forEach((element) -> {
 			retorno.getResultado().add(new HitBusca(element.getId(), (String) element.getSourceAsMap().get("idMensagem"), element.getScore()));
 		});
